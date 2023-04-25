@@ -1,9 +1,11 @@
 from termcolor import colored
-from collection import getWordsCollection
+from collection import getWordsCollection, getWordFromCollectionAccent, collection
+from unidecode import unidecode
 import os
 import random
 
-randomWord = random.choice(getWordsCollection(1))
+getWordsCollection()
+randomWord = random.choice(collection)
 
 WORD = randomWord
 canTry = True
@@ -13,7 +15,9 @@ guesses = []
 
 while(canTry and attempts > 0):
     guess = input()
-    if guess not in getWordsCollection():
+    guess.lower
+    guess = unidecode(guess)
+    if guess not in collection:
         print('Palavra inválida! Tente novamente:')
         continue
 
@@ -43,6 +47,6 @@ while(canTry and attempts > 0):
         attempts -= 1
 
 
-print(f'\nA palavra era {WORD}!\n')
+print(f'\nA palavra era {getWordFromCollectionAccent(WORD)}!\n')
 
 print('Venceu!!!' if win else 'Perdeu!')

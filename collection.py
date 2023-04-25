@@ -1,14 +1,24 @@
-def getWordsCollection(option=1):
-    collection = []
-    if option == 1:
+from unidecode import unidecode
+
+collection = []
+collectionAccent = []
+
+def getWordsCollection(option='main'):
+    global collection, collectionAccent
+    if option == 'main':
         with open('five_letter_words.txt', 'r', encoding='utf-8') as file:
             for line in file:
                 line = line.strip()
-                collection.append(line)
-    else:
+                collectionAccent.append(line)
+                collection.append(unidecode(line))
+    elif option == 'tests':
         collection = [
             'causa',
             'apraz'
         ]
 
-    return collection
+
+def getWordFromCollectionAccent(word):
+    global collection, collectionAccent
+    index = collection.index(word)
+    return collectionAccent[index]
