@@ -1,9 +1,9 @@
 from termcolor import colored
-from dicionario import acervo
+from dicionario import getAcervo
 import os
 import random
 
-idRandomico = random.choice(acervo)
+idRandomico = random.choice(getAcervo(0))
 
 PALAVRA = idRandomico
 podeTentar = True
@@ -13,6 +13,9 @@ chutes = []
 
 while(podeTentar and tentativas > 0):
     chute = input()
+    if chute not in getAcervo():
+        print('palavra invalida')
+        continue
 
     chuteTemp = ''
     chuteTemp2 = ''
@@ -22,7 +25,7 @@ while(podeTentar and tentativas > 0):
         if letra == PALAVRA[i]:
             chuteTemp += colored(letra, "green")
         elif letra in PALAVRA:
-            if colored(letra, "yellow") not in chuteTemp:
+            if colored(letra, "yellow") not in chuteTemp and colored(letra, "green") not in chuteTemp and PALAVRA.count(letra) > 1:
                 chuteTemp += colored(letra, "yellow")
             else:
                 chuteTemp += letra
