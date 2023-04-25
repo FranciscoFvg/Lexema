@@ -1,52 +1,48 @@
 from termcolor import colored
-from dicionario import getAcervo
+from collection import getWordsCollection
 import os
 import random
 
-idRandomico = random.choice(getAcervo(0))
+randomWord = random.choice(getWordsCollection(1))
 
-PALAVRA = idRandomico
-podeTentar = True
-tentativas = 6
-venceu = False
-chutes = []
+WORD = randomWord
+canTry = True
+attempts = 6
+win = False
+guesses = []
 
-while(podeTentar and tentativas > 0):
-    chute = input()
-    if chute not in getAcervo():
-        print('palavra invalida')
+while(canTry and attempts > 0):
+    guess = input()
+    if guess not in getWordsCollection():
+        print('Palavra inválida! Tente novamente:')
         continue
 
-    chuteTemp = ''
-    chuteTemp2 = ''
+    coloredGuess = ''
     os.system('cls' if os.name == 'nt' else 'clear')
-    for i,letra in enumerate(chute):
-        chuteTemp2 += letra
-        if letra == PALAVRA[i]:
-            chuteTemp += colored(letra, "green")
-        elif letra in PALAVRA:
-            if colored(letra, "yellow") not in chuteTemp and colored(letra, "green") not in chuteTemp and PALAVRA.count(letra) > 1:
-                chuteTemp += colored(letra, "yellow")
+
+    for i,letter in enumerate(guess):
+        if letter == WORD[i]:
+            coloredGuess += colored(letter, "green")
+        elif letter in WORD:
+            if colored(letter, "yellow") not in coloredGuess and colored(letter, "green") not in coloredGuess and WORD.count(letter) > 1:
+                coloredGuess += colored(letter, "yellow")
             else:
-                chuteTemp += letra
+                coloredGuess += letter
         else:
-            chuteTemp += letra
-    chutes.append(chuteTemp)
-    for temp in chutes:
+            coloredGuess += letter
+
+    guesses.append(coloredGuess)
+
+    for temp in guesses:
         print(temp)
 
-    if chuteTemp2 == PALAVRA:
-        podeTentar = False
-        venceu = True
+    if guess == WORD:
+        canTry = False
+        win = True
     else:
-        tentativas -= 1
+        attempts -= 1
 
 
-print('')
-print(f'A palavra era {PALAVRA}')
-print('')
+print(f'\nA palavra era {WORD}!\n')
 
-if venceu:
-    print('venceu')
-else:
-    print('perdeu')
+print('Venceu!!!' if win else 'Perdeu!')
